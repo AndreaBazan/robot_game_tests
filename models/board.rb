@@ -1,11 +1,11 @@
 # Defines the Board where the Robot walks
 class Board
   def initialize(attr = {})
-    @squares = attr[:squares]
+    @squares = attr[:squares] || [[Square.new]]
     @oob = Square.new(:oob)
   end
 
-  def square_at(position) # [1,1] [3,3], [2,4]
+  def square_at(position)
     row = position[1] - 1
     column = position[0] - 1
     if @squares[row] != nil && @squares[row][column] != nil
@@ -15,13 +15,22 @@ class Board
     end
   end
 
-  # def to_s
-    
-  # end
-end
+  def to_s
+    print_with_robot_at(nil)
+  end
 
-# @squares = [
-#   [1,2,3,4],
-#   [5,6,7,8],
-#   [9,0,1,2]
-# ]
+  def print_with_robot_at(position = nil)
+    matrix = position ? matrix_with_robot(position) : @squares
+    "\n" + matrix.to_a.map(&:join).join("\n")
+  end
+
+  private
+
+  def matrix_with_robot(position)
+    row = position[1] - 1
+    column = position[0] - 1
+    matrix = @squares.map { |squares_row| squares_row.map(&:dup) }
+    matrix[row][column] = 'R '
+    matrix
+  end
+end

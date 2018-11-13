@@ -8,9 +8,9 @@ describe Robot do
   it { is_expected.to respond_to(:turn_right) }
   it { is_expected.to respond_to(:errors) }
 
-  let(:empty) { Square.empty }
-  let(:wall)  { Square.wall }
-  let(:hole)  { Square.hole }
+  let(:empty) { Square.new(:empty) }
+  let(:wall)  { Square.new(:wall) }
+  let(:hole)  { Square.new(:hole) }
 
   describe "#turn_right" do
     it "changes facing accordingly" do
